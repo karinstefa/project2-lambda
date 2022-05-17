@@ -1,4 +1,3 @@
-#%%
 from flask import Flask
 from boto3.dynamodb.conditions import Key
 from flask_restful import Api, Resource
@@ -50,7 +49,7 @@ class BlackList(Resource):
             return response['Items'][0]['info']
         return {'message': 'the email was not found'}
 
-api.add_resource(BlackList, '/blacklist')
+api.add_resource(BlackList, '/blacklist', '/blacklist/<string:email>')
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=8080)
