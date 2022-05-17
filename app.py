@@ -1,15 +1,23 @@
+#%%
 from flask import Flask
 from boto3.dynamodb.conditions import Key
 from flask_restful import Api, Resource
+import dotenv
+import boto3
 
+
+#%%
 app = Flask(__name__)
-load_dotenv()
+api = Api(app)
+dotenv.load_dotenv()
+
+#%%
 region_name = os.getenv('REGION_NAME')
 table_name = os.getenv('TABLE_NAME')
 
 dynamodb = boto3.resource('dynamodb',
                           region_name = region_name)
-
+#%%
 class BlackList(Resource):
     '''
     post:
@@ -46,3 +54,5 @@ api.add_resource(BlackList, '/blacklist')
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=8080)
+
+# %%
